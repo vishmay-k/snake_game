@@ -1,5 +1,6 @@
 #importing and initialising
 import pygame
+import random
 pygame.init()
 
 #game variables needed for game window
@@ -24,6 +25,8 @@ game_over = False
 snake_x = 45
 snake_y = 55
 snake_size = 10
+food_x = random.randint(0,screen_width)
+food_y = random.randint(0,screen_height)
 vel_x = 10
 vel_y = 0
 fps = 30
@@ -55,6 +58,7 @@ while not exit_game:
     snake_y = snake_y + vel_y
 
     gamewindow.fill(white)
+    pygame.draw.rect(gamewindow, red, [food_x, food_y, snake_size, snake_size])
     pygame.draw.rect(gamewindow,black,[snake_x, snake_y, snake_size, snake_size])
     pygame.display.update()
     clock.tick(fps)
