@@ -26,6 +26,7 @@ snake_x = screen_width/2
 snake_y = screen_height/2
 snake_size = 10
 eat_size = 0.75*snake_size
+
 food_x = random.randint(50,screen_width-50)
 food_y = random.randint(50,screen_height-50)
 init_vel = 3
@@ -41,8 +42,16 @@ def screen_score(text, color, x, y):
     screen_text = font.render(text, True, color)
     gamewindow.blit(screen_text, [x,y])
 
+def plot_snake(gamewin, color, snk_list,size):
+    for x,y in snk_list:
+        pygame.draw.rect(gamewin, color, [x, y, size, size])
+
+snake_list = []
+snake_length = 1
+
 #game loop
 while not exit_game:
+
     for event in pygame.event.get():
         #print(event)
         if event.type == pygame.QUIT:
@@ -68,9 +77,20 @@ while not exit_game:
         score += 1
         food_x = random.randint(50, screen_width / 2)
         food_y = random.randint(50, screen_height / 2)
+        snake_length += 5
+
     gamewindow.fill(white)
-    screen_score("SCORE :" + str(score * 10), blue, 5, 5)
-    pygame.draw.rect(gamewindow, red, [food_x, food_y, snake_size, snake_size])
-    pygame.draw.rect(gamewindow,black,[snake_x, snake_y, snake_size, snake_size])
+    screen_score("SCORE :" + str(score * 10), black, 5, 5)
+    pygame.draw.rect(gamewindow, green, [food_x, food_y, snake_size, snake_size])
+
+    head = []
+    head.append(snake_x)
+    head.append(snake_y)
+    snake_list.append(head)
+
+    if len(snake_list) > snake_length:
+        del snake_list[0]
+
+    plot_snake(gamewindow, black, snake_list, snake_size)
     pygame.display.update()
     clock.tick(fps)
