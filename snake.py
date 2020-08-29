@@ -112,6 +112,9 @@ def gameloopin():
             if len(snake_list) > snake_length:
                 del snake_list[0]
 
+            if head in snake_list[:-1]:
+                game_over = True
+
             if snake_x < 0 or snake_x > screen_width or snake_y < 35 or snake_y > screen_height:
                 game_over = True
 
