@@ -60,7 +60,9 @@ def gameloopin():
     while not exit_game:
         if game_over:
             gamewindow.fill(white)
-            screen_score("GAME OVER ! PRESS ENTER TO CONTINUE", red, 2, 2)
+            screen_score("GAME OVER !", red, screen_width * 0.40, screen_height * 0.28)
+            screen_score(f"SCORE : {scr}", blue, screen_width * 0.41, screen_height * 0.40)
+            screen_score("PRESS ENTER TO CONTINUE", red, screen_width * 0.28, screen_height * 0.54)
 
             for event in pygame.event.get():
 
@@ -98,7 +100,8 @@ def gameloopin():
                 snake_length += 5
 
             gamewindow.fill(white)
-            screen_score("SCORE :" + str(score * 10), black, 5, 5)
+            scr = str(score * 10)
+            screen_score("SCORE :" + scr, black, 5, 5)
             pygame.draw.rect(gamewindow, green, [food_x, food_y, snake_size, snake_size])
 
             head = []
@@ -111,7 +114,6 @@ def gameloopin():
 
             if snake_x < 0 or snake_x > screen_width or snake_y < 35 or snake_y > screen_height:
                 game_over = True
-                print("game over")
 
             plot_snake(gamewindow, black, snake_list, snake_size)
         pygame.display.update()
