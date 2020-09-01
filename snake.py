@@ -64,7 +64,7 @@ def gameloopin():
     while not exit_game:
         if game_over:
             gamewindow.fill(black)
-            screen_score("  SNAKE", green, screen_width * 0.42, 5)
+            screen_score("  SNAKE", green, screen_width * 0.42, 10)
             screen_score("GAME OVER !", green, screen_width * 0.40, screen_height * 0.28)
             screen_score(f"SCORE : {score}", green, screen_width * 0.41, screen_height * 0.37)
             screen_score(f"HIGH SCORE : {hiscore}", green, screen_width * 0.36, screen_height * 0.46)
@@ -99,6 +99,12 @@ def gameloopin():
                     if event.key == pygame.K_UP:
                         vel_y = - init_vel
                         vel_x = 0
+                    if event.key == pygame.K_q:
+                        score += 10
+                        if score > int(hiscore):
+                            hiscore = score
+                    if event.key == pygame.K_0:
+                        exit_game = True
 
             snake_x = snake_x + vel_x
             snake_y = snake_y + vel_y
