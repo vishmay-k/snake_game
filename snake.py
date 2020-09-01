@@ -1,6 +1,7 @@
 # importing and initialising
 import pygame
 import random
+import os
 pygame.init()
 
 # game variables needed for game window
@@ -66,11 +67,16 @@ def gameloopin():
     eat_size = 0.75 * snake_size
     food_x = random.randint(50, screen_width - 50)
     food_y = random.randint(50, screen_height - 50)
-    init_vel = 3
+    init_vel = 2.5
     vel_x = init_vel
     vel_y = 0
     fps = 60
     score = 0
+
+    #check if high score file exist
+    if(not os.path.exists("hscore.txt")):
+        with open("hscore.txt", "w") as f:
+            f.write("0")
 
     # high score file open
     with open("hscore.txt", "r") as f:
@@ -131,8 +137,8 @@ def gameloopin():
 
             gamewindow.fill(white)
             screen_score(" SNAKE", green, 5, 5)
-            screen_score("SCORE :" + str(score) + "     HIGH SCORE: " + str(hiscore), black, 120, 5)
-            screen_score("0 - EXIT", red, screen_width - 100, 5)
+            screen_score("SCORE :" + str(score) + "     HIGH SCORE: " + str(hiscore), black, 200, 5)
+            screen_score("0 - EXIT", red, screen_width - 105, 5)
             pygame.draw.rect(gamewindow, green, [food_x, food_y, snake_size, snake_size])
 
             head = []
