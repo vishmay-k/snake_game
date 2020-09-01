@@ -2,6 +2,8 @@
 import pygame
 import random
 import os
+
+pygame.mixer.init()
 pygame.init()
 
 # game variables needed for game window
@@ -128,6 +130,8 @@ def gameloopin():
             snake_x = snake_x + vel_x
             snake_y = snake_y + vel_y
             if abs(snake_x-food_x) < eat_size and abs(snake_y-food_y) < eat_size:
+                pygame.mixer.music.load("eat_beep.mp3")
+                pygame.mixer.music.play()
                 score += 10
                 food_x = random.randint(50, screen_width / 2)
                 food_y = random.randint(50, screen_height / 2)
@@ -151,9 +155,13 @@ def gameloopin():
 
             if head in snake_list[:-1]:
                 game_over = True
+                pygame.mixer.music.load("gameover.mp3")
+                pygame.mixer.music.play()
 
             if snake_x < 0 or snake_x > screen_width or snake_y < 35 or snake_y > screen_height:
                 game_over = True
+                pygame.mixer.music.load("gameover.mp3")
+                pygame.mixer.music.play()
 
             plot_snake(gamewindow, black, snake_list, snake_size)
         pygame.display.update()
