@@ -130,7 +130,9 @@ def gameloopin():
                     hiscore = score
 
             gamewindow.fill(white)
-            screen_score("  SNAKE    SCORE :" + str(score) + "    HIGH SCORE: " + str(hiscore) + "        0 - EXIT", black, 5, 5)
+            screen_score(" SNAKE", green, 5, 5)
+            screen_score("SCORE :" + str(score) + "     HIGH SCORE: " + str(hiscore), black, 120, 5)
+            screen_score("0 - EXIT", red, screen_width - 100, 5)
             pygame.draw.rect(gamewindow, green, [food_x, food_y, snake_size, snake_size])
 
             head = []
