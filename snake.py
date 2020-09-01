@@ -36,8 +36,23 @@ def plot_snake(gamewin, color, snk_list, size):
         pygame.draw.rect(gamewin, color, [x, y, size, size])
 
 
-# game loop
+def welcome():
+    exit_game = False
+    while not exit_game:
+        gamewindow.fill(green)
+        screen_score("WELCOME TO SNAKE", black, screen_width * 0.33, screen_height * 0.40)
+        screen_score("PRESS SPACEBAR TO PLAY", black, screen_width * 0.28, screen_height * 0.50)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit_game = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    gameloopin()
+        pygame.display.update()
+        clock.tick(60)
 
+
+# game loop
 def gameloopin():
     # list used to make snake grow
     snake_list = []
@@ -65,10 +80,10 @@ def gameloopin():
         if game_over:
             gamewindow.fill(black)
             screen_score("  SNAKE", green, screen_width * 0.42, 10)
-            screen_score("GAME OVER !", green, screen_width * 0.40, screen_height * 0.28)
-            screen_score(f"SCORE : {score}", green, screen_width * 0.41, screen_height * 0.37)
+            screen_score("GAME OVER !", green, screen_width * 0.40, screen_height * 0.25)
+            screen_score(f"SCORE : {score}", green, screen_width * 0.41, screen_height * 0.36)
             screen_score(f"HIGH SCORE : {hiscore}", green, screen_width * 0.36, screen_height * 0.46)
-            screen_score("PRESS ENTER TO CONTINUE", green, screen_width * 0.28, screen_height * 0.57)
+            screen_score("PRESS SPACEBAR TO CONTINUE", green, screen_width * 0.25, screen_height * 0.58)
             # high score file open to write
             with open("hscore.txt", "w") as f:
                 f.write(str(hiscore))
@@ -78,8 +93,8 @@ def gameloopin():
                 if event.type == pygame.QUIT:
                     exit_game = True
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:
-                        gameloopin()
+                    if event.key == pygame.K_SPACE:
+                        welcome()
         else:
             for event in pygame.event.get():
 
@@ -101,8 +116,6 @@ def gameloopin():
                         vel_x = 0
                     if event.key == pygame.K_q:
                         score += 10
-                        if score > int(hiscore):
-                            hiscore = score
                     if event.key == pygame.K_0:
                         exit_game = True
 
@@ -117,7 +130,7 @@ def gameloopin():
                     hiscore = score
 
             gamewindow.fill(white)
-            screen_score("  SNAKE    SCORE :" + str(score) + "    HIGH SCORE: " + str(hiscore), black, 5, 5)
+            screen_score("  SNAKE    SCORE :" + str(score) + "    HIGH SCORE: " + str(hiscore) + "        0 - EXIT", black, 5, 5)
             pygame.draw.rect(gamewindow, green, [food_x, food_y, snake_size, snake_size])
 
             head = []
@@ -142,4 +155,4 @@ def gameloopin():
     quit()
 
 
-gameloopin()
+welcome()
