@@ -15,6 +15,10 @@ gamewindow = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("snake")
 pygame.display.update()
 
+# background image
+bgimg = pygame.image.load("bg_img.jpg")
+bgimg = pygame.transform.scale(bgimg, (screen_width, screen_height)).convert_alpha()
+
 # colors
 white = (255, 255, 255)
 red = (255, 0, 0)
@@ -75,8 +79,8 @@ def gameloopin():
     fps = 60
     score = 0
 
-    #check if high score file exist
-    if(not os.path.exists("hscore.txt")):
+    # check if high score file exist
+    if not os.path.exists("hscore.txt"):
         with open("hscore.txt", "w") as f:
             f.write("0")
 
@@ -129,7 +133,7 @@ def gameloopin():
 
             snake_x = snake_x + vel_x
             snake_y = snake_y + vel_y
-            if abs(snake_x-food_x) < eat_size and abs(snake_y-food_y) < eat_size:
+            if abs(snake_x - food_x) < eat_size and abs(snake_y - food_y) < eat_size:
                 pygame.mixer.music.load("eat_beep.mp3")
                 pygame.mixer.music.play()
                 score += 10
@@ -140,6 +144,7 @@ def gameloopin():
                     hiscore = score
 
             gamewindow.fill(white)
+            gamewindow.blit(bgimg, (0, 0))
             screen_score(" SNAKE", green, 5, 5)
             screen_score("SCORE :" + str(score) + "     HIGH SCORE: " + str(hiscore), black, 200, 5)
             screen_score("0 - EXIT", red, screen_width - 105, 5)
