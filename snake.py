@@ -57,12 +57,21 @@ def gameloopin():
     fps = 60
     score = 0
 
+    # high score file open
+    with open("hscore.txt", "r") as f:
+        hiscore = f.read()
+
     while not exit_game:
         if game_over:
-            gamewindow.fill(white)
-            screen_score("GAME OVER !", red, screen_width * 0.40, screen_height * 0.28)
-            screen_score(f"SCORE : {scr}", blue, screen_width * 0.41, screen_height * 0.40)
-            screen_score("PRESS ENTER TO CONTINUE", red, screen_width * 0.28, screen_height * 0.54)
+            gamewindow.fill(black)
+            screen_score("  SNAKE", green, screen_width * 0.42, 5)
+            screen_score("GAME OVER !", green, screen_width * 0.40, screen_height * 0.28)
+            screen_score(f"SCORE : {score}", green, screen_width * 0.41, screen_height * 0.37)
+            screen_score(f"HIGH SCORE : {hiscore}", green, screen_width * 0.36, screen_height * 0.46)
+            screen_score("PRESS ENTER TO CONTINUE", green, screen_width * 0.28, screen_height * 0.57)
+            # high score file open to write
+            with open("hscore.txt", "w") as f:
+                f.write(str(hiscore))
 
             for event in pygame.event.get():
 
@@ -94,14 +103,15 @@ def gameloopin():
             snake_x = snake_x + vel_x
             snake_y = snake_y + vel_y
             if abs(snake_x-food_x) < eat_size and abs(snake_y-food_y) < eat_size:
-                score += 1
+                score += 10
                 food_x = random.randint(50, screen_width / 2)
                 food_y = random.randint(50, screen_height / 2)
                 snake_length += 5
+                if score > int(hiscore):
+                    hiscore = score
 
             gamewindow.fill(white)
-            scr = str(score * 10)
-            screen_score("SCORE :" + scr, black, 5, 5)
+            screen_score("  SNAKE    SCORE :" + str(score) + "    HIGH SCORE: " + str(hiscore), black, 5, 5)
             pygame.draw.rect(gamewindow, green, [food_x, food_y, snake_size, snake_size])
 
             head = []
